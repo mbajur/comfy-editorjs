@@ -1,0 +1,14 @@
+<div class="editorjs-gallery">
+  <% block['data']['files'].each do |file_data| %>
+    <% file_id = file_data['id'] %>
+    <% file = cached_files[file_id] %>
+    <% next unless file %>
+
+    <div class="editorjs-gallery-image">
+      <img src="<%= file_data['url'] %>"
+          alt="<%= file_data['caption'] %>"
+          width="<%= file.attachment.blob.metadata['width'] %>"
+          height="<%= file.attachment.blob.metadata['height'] %>">
+    </div>
+  <% end %>
+</div>

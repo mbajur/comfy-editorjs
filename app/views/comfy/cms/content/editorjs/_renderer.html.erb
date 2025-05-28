@@ -1,0 +1,18 @@
+<%
+  file_ids = content['blocks'].map { |b| b.dig('data', 'file', 'id') }.compact
+  file_ids += content['blocks'].flat_map { |b| b.dig('data', 'files')&.map { |f| f['id'] } }.compact
+  cached_files = Comfy::Cms::File.where(id: file_ids).index_by(&:id)
+%>
+
+<% content['blocks'].each do |block| %>
+  <% locals = { block: block, cached_files: cached_files } %>
+  <% if block['type'] == 'paragraph' %>
+    <%= render partial: 'comfy/cms/content/editorjs/paragraph', locals: locals %>
+  <% elsif block['type'] == 'header' %>
+    <%= render partial: 'comfy/cms/content/editorjs/header', locals: locals %>
+  <% elsif block['type'] == 'image' %>
+    <%= render partial: 'comfy/cms/content/editorjs/image', locals: locals %>
+  <% elsif block['type'] == 'gallery' %>
+    <%= render partial: 'comfy/cms/content/editorjs/gallery', locals: locals %>
+  <% end %>
+<% end %>

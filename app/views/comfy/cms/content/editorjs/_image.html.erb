@@ -1,0 +1,9 @@
+<div class="editorjs-image">
+  <% file_id = block.dig('data', 'file', 'id') %>
+  <% file = cached_files[file_id] %>
+
+  <img src="<%= block.dig('data', 'file', 'url') %>"
+       alt="<%= block.dig('data', 'caption') %>"
+       width="<%= file.attachment.blob.metadata['width'] %>"
+       height="<%= file.attachment.blob.metadata['height'] %>">
+</div>
